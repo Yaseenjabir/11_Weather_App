@@ -4,17 +4,21 @@ const apiKey = "bd894118ef89fd4cc0c3c75960a6e13c";
 
 // This function will fetch data from API
 async function fetchData(receieve) {
+  
+  // using try and catch method to catch the error
   try {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${receieve}&units=metric&appid=${apiKey}`
     );
 
     const data = await response.json();
+
+    // Handling response from the server
     if (!response.ok) {
       console.log(data.message);
     }
     renderWeather(data);
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     console.log("Error", error);
   }
@@ -35,6 +39,8 @@ const icon = document.querySelector(".description i");
 
 // This function will render the weather info on screen
 function renderWeather(data) {
+
+  // setting all the elements data to the data recieved from API
   cityName.textContent = data.name;
   description.textContent = data.weather[0].description;
   temp.textContent = Math.round(data.main.temp);
@@ -54,6 +60,8 @@ const input = document.querySelector(".city-input");
 // Adding event listner to form
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  // taking user input 
   const cityInput = input.value;
   if (cityInput !== "") {
     fetchData(cityInput);
